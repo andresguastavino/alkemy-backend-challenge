@@ -35,11 +35,12 @@ MovieOrSerie.belongsTo(Genre, {
     foreignKey: 'genre_id'
 });
 
-database.sync({ force: NODE_ENV !== 'prod' });
+database.sync({ force: NODE_ENV === 'test' });
 
 module.exports = {
     Character,
     Genre,
     MovieOrSerie,
+    CharacterMovieOrSerie,
     User
 };
