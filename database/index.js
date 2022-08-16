@@ -7,8 +7,9 @@ const MovieOrSerieModel = require('./models/MovieOrSerie');
 const UserModel = require('./models/User');
 
 const Sequelize = require('sequelize');
-const database_config = require('./config')(process);
-const database = new Sequelize(database_config[NODE_ENV]);
+const database_config = require('./config');
+const { database_name, username, password, host, port, dialect } = database_config;
+const database = new Sequelize(database_name, username, password, { host, port, dialect});
 
 const Character = CharacterModel(database, Sequelize);
 const Genre = GenreModel(database, Sequelize);
