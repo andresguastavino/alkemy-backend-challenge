@@ -11,7 +11,6 @@ module.exports = (database, type) => {
         },
         image: type.STRING,
         created_date: type.DATE,
-        characters: type.JSON,
         rating: type.INTEGER.UNSIGNED
     });
 };

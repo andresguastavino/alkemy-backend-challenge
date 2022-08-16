@@ -12,7 +12,6 @@ module.exports = (database, type) => {
         age: type.INTEGER.UNSIGNED,
         weight: type.DECIMAL(10, 2),
         history: type.STRING(500),
-        movies_or_series: type.JSON,
         image: type.STRING
     });
 };

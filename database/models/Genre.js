@@ -9,7 +9,6 @@ module.exports = (database, type) => {
             type: type.STRING(50),
             allowNull: false
         },
-        movies_or_series: type.JSON,
         image: type.STRING
     });
 };
