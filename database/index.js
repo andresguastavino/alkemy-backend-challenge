@@ -19,8 +19,8 @@ const CharacterMovieOrSerie = CharacterMovieOrSerieModel(database, Sequelize);
 const User = UserModel(database, Sequelize);
 
 // relation between characters and movies or series
-Character.belongsToMany(MovieOrSerie, { through: CharacterMovieOrSerie });
-MovieOrSerie.belongsToMany(Character, { through: CharacterMovieOrSerie });
+Character.belongsToMany(MovieOrSerie, { through: CharacterMovieOrSerie, foreignKey: 'character_id' });
+MovieOrSerie.belongsToMany(Character, { through: CharacterMovieOrSerie, foreignKey: 'm_or_s_id' });
 
 // relation between genres and movies
 Genre.hasMany(MovieOrSerie, {
@@ -35,7 +35,7 @@ MovieOrSerie.belongsTo(Genre, {
     foreignKey: 'genre_id'
 });
 
-database.sync({ force: NODE_ENV === 'test' });
+database.sync({ force: NODE_ENV === 'test' || true });
 
 module.exports = {
     Character,

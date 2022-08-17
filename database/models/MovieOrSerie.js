@@ -9,8 +9,8 @@ module.exports = (database, type) => {
             type: type.STRING(100),
             allowNull: false
         },
-        image: type.STRING,
         created_date: type.DATE,
-        rating: type.INTEGER.UNSIGNED
+        rating: type.INTEGER.UNSIGNED,
+        image: type.STRING
     });
 };
