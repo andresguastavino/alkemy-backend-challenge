@@ -1,14 +1,14 @@
 module.exports = (database, type) => {
     return database.define('characters_movies_or_series', {
-        m_or_s_id: {
+        movieOrSerieId: {
             type: type.INTEGER,
             references: {
-                model: 'movies_or_series',
+                model: 'moviesOrSeries',
                 key: 'id'
             },
             allowNull: false
         },
-        character_id: {
+        characterId: {
             type: type.INTEGER,
             references: {
                 model: 'characters',

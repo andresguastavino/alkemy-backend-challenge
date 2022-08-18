@@ -19,7 +19,7 @@ const seedMovies = async () => {
     if(genres.length) {
         newMoviesOrSeries = newMoviesOrSeries.map(movie => {
             const i = Math.floor(Math.random() * genres.length);
-            movie.genre_id = genres[i].id;
+            movie.genreId = genres[i].id;
             return movie;
         });
     }
@@ -42,8 +42,8 @@ const seedCharactersWithMoviesOrSeries = async () => {
 
         if(!relations.includes(`${i}${j}`)) {
             characterMovieOrSerie.push({
-                character_id: characters[i].id,
-                m_or_s_id: moviesOrSeries[j].id
+                characterId: characters[i].id,
+                movieOrSerieId: moviesOrSeries[j].id
             });
             counter++;
             relations.push(`${i}${j}`);

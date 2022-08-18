@@ -1,5 +1,5 @@
 module.exports = (database, type) => {
-    return database.define('movies_or_series', {
+    return database.define('moviesOrSeries', {
         id: {
             type: type.INTEGER,
             primaryKey: true,
