@@ -3,7 +3,7 @@ const {
     validateMaxLength, 
     validateNotNull, 
     validateIsNumber, 
-    validateStringIsFloat, 
+    validateMinValue,
     validateDecimalPlace, 
     validateIsPositive 
 } = require('../utils/validations');
@@ -16,7 +16,7 @@ const validations = {
     ],
     age: [
         (age, errors) => validateNotNull(age, errors, 'Character\'s Age is mandatory'),
-        (age, errors) => validateIsNumber(age, errors, 'Age must be a number'),
+        (age, errors) => validateMinValue(age, 0, true, errors, 'Age must be greater than 0'),
         (age, errors) => validateIsPositive(age, errors, 'Age must be a positive number')
     ],
     weight: [

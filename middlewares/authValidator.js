@@ -14,7 +14,7 @@ const validations = {
     password: [
         (password, errors) => { validateNotNull(password, errors, 'Password is mandatory'); },
         (password, errors, method) => { method === methods.Register && validateType(password, 'string', errors, 'Password has to be a string'); },
-        (password, errors, method) => { method === methods.Register && validateMinLength(password, 6, errors, 'Password must have a minimum length of 6 characters and a maximum length of 20 characters'); },
+        (password, errors, method) => { method === methods.Register && validateMinLength(password, 6, true, errors, 'Password must have a minimum length of 6 characters and a maximum length of 20 characters'); },
         (password, errors, method) => { method === methods.Register && validateRegex(password, /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/, errors, 'Password must contain at least one lower case letter, one upper case letter and a number'); }
     ]
 };

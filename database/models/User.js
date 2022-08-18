@@ -5,7 +5,7 @@ module.exports = (database, type) => {
             primaryKey: true,
             autoIncrement: true
         },
-        email: type.STRING,
-        password: type.STRING
+        email: type.STRING(100),
+        password: type.STRING(250)
     });
 };

@@ -19,15 +19,20 @@ const validateType = (value, type, errors, errorMessage) => {
     checkValidationResult(valid, errors, errorMessage);
 }
 
-const validateMinLength = (value, min, isStrict = true, errors, errorMessage) => {
+const validateMinLength = (value, min, isStrict, errors, errorMessage) => {
     if(!value) return;
     const valid = value && isStrict ? value.length > min : value.length >= min;
     checkValidationResult(valid, errors, errorMessage);
 }
 
-const validateMaxLength = (value, max, isStrict = true, errors, errorMessage) => {
+const validateMaxLength = (value, max, isStrict, errors, errorMessage) => {
     if(!value) return;
     const valid = value && isStrict ? value.length < max : value.length <= max;
+    checkValidationResult(valid, errors, errorMessage);
+}
+
+const validateMinValue = (value, min, isStrict, errors, errorMessage) => {
+    const valid = isStrict ? value > min : value >= min;
     checkValidationResult(valid, errors, errorMessage);
 }
 
@@ -55,7 +60,7 @@ const validateDecimalPlace = (value, decimalParts, errors, errorMessage) => {
 }
 
 const validateIsPositive = (value, errors, errorMessage) => {
-    const valid = value > 0;
+    const valid = value >= 0;
     checkValidationResult(valid, errors, errorMessage);
 }
 
@@ -69,5 +74,6 @@ module.exports = {
     validateIsNumber,
     validateStringIsFloat,
     validateDecimalPlace,
-    validateIsPositive
+    validateIsPositive,
+    validateMinValue
 };

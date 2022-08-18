@@ -12,6 +12,6 @@ module.exports = (database, type) => {
         age: type.INTEGER.UNSIGNED,
         weight: type.DECIMAL(10, 2),
         history: type.STRING(500),
-        image: type.STRING
+        image: type.STRING(250)
     });
 };

@@ -9,6 +9,6 @@ module.exports = (database, type) => {
             type: type.STRING(50),
             allowNull: false
         },
-        image: type.STRING
+        image: type.STRING(250)
     });
 };
