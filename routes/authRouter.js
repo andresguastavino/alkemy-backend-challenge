@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const validateAuth = require('../middlewares/authValidator');
 const { createToken } = require('../utils/token');
+const sendEmailTo = require('../helpers/sendEmail');
 
 const { User } = require('../database');
 
@@ -23,6 +24,8 @@ router.post('/register', validateAuth, async (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     req.body.email = email;
 	user = await User.create(req.body);
+
+    sendEmailTo(email);
 
     const access_token = createToken(user);
 

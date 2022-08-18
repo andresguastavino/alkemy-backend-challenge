@@ -5,15 +5,17 @@ const { Character, MovieOrSerie, Genre } = require('../database');
 const searchCharacter = async (req, res) => {
     const { name, age, weight, movies } = req.query;  
     
-    let where = {};
+    let where = {
+        where: {}
+    };
     if(name) {
-        where.name = { [Op.like]: [`%${name}%`] };
+        where.where.name = { [Op.like]: [`%${name}%`] };
     }
     if(age) {
-        where.age = age;
+        where.where.age = age;
     }
     if(weight) {
-        where.weight = weight;
+        where.where.weight = weight;
     }
     if(movies) {
         where.include = {
@@ -22,7 +24,7 @@ const searchCharacter = async (req, res) => {
         };
     }
 
-    let moviesOrSeries = movies ? await Character.findAll( where )
+    let moviesOrSeries = movies ? await Character.findAll(where)
         .then(results => {
             let resultsMap = {};
             results.forEach(result => {
@@ -32,7 +34,7 @@ const searchCharacter = async (req, res) => {
         }) : {};
     delete where.include;
 
-    let characters = await Character.findAll({ where })
+    let characters = await Character.findAll(where)
         .then(characters => {
             return characters.map(character => {
                 character.weight = parseFloat(character.weight);
@@ -55,7 +57,26 @@ const searchCharacter = async (req, res) => {
 }
 
 const searchMovie = async (req, res) => {
+    const { name, genre, order } = req.query;
 
+    let where = {
+        where: {},
+        order: []
+    };
+
+    if(name) {
+        where.where.title = { [Op.like]: [`%${name}%`] };
+    }
+    if(genre) {
+        where.where.genreId = genre;
+    }
+    if(order && (order.toLowerCase() === 'asc' || order.toLowerCase() === 'desc')) {
+        where.order[0] = [ 'createdDate', order ];
+    }
+
+    const moviesOrSeries = await MovieOrSerie.findAll(where);
+
+    return res.status(200).json({ result: 'success', moviesOrSeries });
 }
 
 module.exports = { 
