@@ -12,7 +12,7 @@ const validations = {
     name: [
         (name, errors) => validateNotNull(name, errors, 'Character\'s Name is mandatory'),
         (name, errors) => validateType(name, 'string', errors, 'Name must be a string'),
-        (name, errors) => validateMaxLength(name, 50, true, errors, 'Name\'s length cannot be more than 50 characters')
+        (name, errors) => validateMaxLength(name, 50, false, errors, 'Name\'s length cannot be more than 50 characters')
     ],
     age: [
         (age, errors) => validateNotNull(age, errors, 'Character\'s Age is mandatory'),
@@ -27,12 +27,12 @@ const validations = {
     history: [
         (history, errors) => validateNotNull(history, errors, 'Character\'s History is mandatory'),
         (history, errors) => validateType(history, 'string', errors, 'History must be a string'),
-        (history, errors) => validateMaxLength(history, 500, true, errors, 'History\'s length cannot be more than 500 characters')
+        (history, errors) => validateMaxLength(history, 500, false, errors, 'History\'s length cannot be more than 500 characters')
     ],
     image: [
         (image, errors) => validateNotNull(image, errors, 'Character\'s Image is mandatory'),
         (image, errors) => validateType(image, 'string', errors, 'Image must be a string'),
-        (image, errors) => validateMaxLength(image, 500, true, errors, 'Image\'s length cannot be more than 250 characters')
+        (image, errors) => validateMaxLength(image, 250, false, errors, 'Image\'s length cannot be more than 250 characters')
     ]
 };
 

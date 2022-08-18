@@ -2,9 +2,9 @@ const router = require('express').Router();
 
 const { Op } = require('sequelize');
 
-const { Character, MovieOrSerie, CharacterMovieOrSerie } = require('../database');
+const { Character, MovieOrSerie } = require('../database');
 
-const postValidations = require('../middlewares/charactersValidator');
+const fieldsValidations = require('../middlewares/charactersValidator');
 
 router.get('/', async (req, res) => {
     const characters = await Character.findAll({
@@ -86,20 +86,28 @@ router.get('/:characterId', async (req, res) => {
     return res.status(200).json({ result: 'success', character });
 });
 
-router.post('/', postValidations, async (req, res) => {
+router.post('/', fieldsValidations, async (req, res) => {
     const { errors } = req;
     if(errors.length) {
         return res.status(400).json({ result: 'error', errors });
     }
 
-    const character = await Character.create(req.body);
+    try {
+        const character = await Character.create(req.body);
+    } catch(error) {
+        return res.status(500).json({ result: 'error', errors: [ error ]});
+    }
 
     return res.status(201).json({ result: 'success', message: 'Character created succesfully', character });
 });
 
-router.put('/:characterId', async (req, res) => {
-    const { characterId } = req.params;
+router.put('/:characterId', fieldsValidations, async (req, res) => {
+    const { errors } = req;
+    if(errors.length) {
+        return res.status(400).json({ result: 'error', errors });
+    }
 
+    const { characterId } = req.params;
     if(!characterId) {
         return res.status(400).json({ result: 'error', errors: [ `characterId not specified` ]});
     }
@@ -118,15 +126,18 @@ router.put('/:characterId', async (req, res) => {
     if(history) updateFields.history = history
     if(image) updateFields.image = image
     
-    await character.update(updateFields);
-    await character.save();
+    try {
+        await character.update(updateFields);
+        await character.save();
+    } catch(error) {
+        return res.status(500).json({ result: 'error', errors: [ error ]});
+    }
     
     return res.status(201).json({ result: 'success', message: 'Character updated succesfully', character });
 });
 
 router.delete('/:characterId', async (req, res) => {
     const { characterId } = req.params;
-
     if(!characterId) {
         return res.status(400).json({ result: 'error', errors: [ `characterId not specified` ]});
     }
@@ -136,9 +147,13 @@ router.delete('/:characterId', async (req, res) => {
         return res.status(204).json({ result: 'error', errors: [ `No character found with id ${ characterId}` ]});
     }
 
-    character = await Character.destroy({
-        where: { id: characterId }
-    });
+    try {
+        character = await Character.destroy({
+            where: { id: characterId }
+        });
+    } catch(error) {
+        return res.status(500).json({ result: 'error', errors: [ error ]});
+    }
 
     return res.status(201).json({ result: 'success', message: 'Character deleted succesfully' });
 });
