@@ -23,7 +23,12 @@ router.post('/register', validateAuth, async (req, res) => {
 
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     req.body.email = email;
-	user = await User.create(req.body);
+
+    try {
+        user = await User.create(req.body);
+    } catch(error) {
+        return res.status(500).json({ result: 'error', errors: [ error ]});
+    }
 
     sendEmailTo(email);
 
