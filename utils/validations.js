@@ -52,6 +52,7 @@ const validateStringIsFloat = (value, errors, errorMessage) => {
 }
 
 const validateDecimalPlace = (value, decimalParts, errors, errorMessage) => {
+    if(!value) return;
     const decimalPart = value.toString().split('.');
     if(decimalPart.length > 1) {
         const valid = decimalPart[1].length <= decimalParts;
@@ -61,6 +62,23 @@ const validateDecimalPlace = (value, decimalParts, errors, errorMessage) => {
 
 const validateIsPositive = (value, errors, errorMessage) => {
     const valid = value >= 0;
+    checkValidationResult(valid, errors, errorMessage);
+}
+
+const validIsInteger = (value, errors, errorMessage) => {
+    if(!value) return;
+    let valueParts = value.toString().split('.');
+    const valid = valueParts.length === 1;
+    checkValidationResult(valid, errors, errorMessage);
+}
+
+const validateIsArray = (value, errors, errorMessage) => {
+    const valid = Array.isArray(value);
+    checkValidationResult(valid, errors, errorMessage);
+}
+
+const validateStringIsNumber = (value, errors, errorMessage) => {
+    const valid = !isNaN(parseInt(value));
     checkValidationResult(valid, errors, errorMessage);
 }
 
@@ -75,5 +93,8 @@ module.exports = {
     validateStringIsFloat,
     validateDecimalPlace,
     validateIsPositive,
-    validateMinValue
+    validateMinValue,
+    validIsInteger,
+    validateIsArray,
+    validateStringIsNumber
 };
