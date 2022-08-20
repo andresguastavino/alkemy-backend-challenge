@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { MovieOrSerie, Character } = require('../database');
+const { MovieOrSerie, Character, Genre } = require('../database');
 
 const { searchMovie } = require('../helpers/searchHelper');
 
@@ -20,10 +20,15 @@ router.get('/:movieOrSerieId', async (req, res) => {
     const { movieOrSerieId } = req.params;
 
     const movieOrSerie = await MovieOrSerie.findByPk(movieOrSerieId, {
-        include: {
-            model: Character,
-            through: { attributes: [] }
-        }
+        include: [
+            {
+                model: Character,
+                through: { attributes: [] },
+            },
+            {
+                model: Genre 
+            }
+        ]
     });
 
     if(!movieOrSerie) {
@@ -33,6 +38,9 @@ router.get('/:movieOrSerieId', async (req, res) => {
     return res.status(200).json({ result: 'success', movieOrSerie });
 });
 
+router.post('/', async (req, res) => {
 
+    
+});
 
 module.exports = router;
